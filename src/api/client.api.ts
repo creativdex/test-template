@@ -1,5 +1,5 @@
-import { CreateUserType } from "@src/schemas/create-user.schema";
-import axios, { AxiosInstance } from "axios";
+import { CreateUserBodyType, CreateUserRespType } from '@src/schemas/create-user.schema';
+import axios, { AxiosInstance } from 'axios';
 
 class ApiClient {
   protected readonly client: AxiosInstance;
@@ -8,20 +8,20 @@ class ApiClient {
     this.client = axios.create({
       baseURL: process.env.API_URL,
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
     });
   }
 
-  async createUser(body: CreateUserType): Promise<any> {
+  async createUser(body: CreateUserBodyType): Promise<CreateUserRespType> {
     try {
-      const response = await this.client.post<CreateUserType>("/v2/user", body);
+      const response = await this.client.post<CreateUserRespType>('/v2/user', body);
       return response.data;
     } catch (error) {
       if (axios.isAxiosError(error)) {
         throw error;
       }
-      throw new Error("Unexpected error occurred");
+      throw new Error('Unexpected error occurred');
     }
   }
 }
